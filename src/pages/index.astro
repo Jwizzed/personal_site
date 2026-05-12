@@ -2,7 +2,6 @@
 import { type CollectionEntry, getCollection } from "astro:content";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import Note from "@/components/note/Note.astro";
-import SocialList from "@/components/SocialList.astro";
 import { getAllPosts } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
@@ -31,13 +30,15 @@ const latestNotes = allNotes
 
 <PageLayout meta={{ title: "Home" }}>
 	<section>
-		<h1 class="title mb-12">Hello World!</h1>
+		<h1 class="title mb-12">สวัสดี!</h1>
 		<p class="mb-4">
-			Hi, I’m a theme for Astro, a simple starter that you can use to create your website or blog.
-			If you want to know more about how you can customise me, add more posts, and make it your own,
-			click on the GitHub icon link below and it will take you to my repo.
+			ถ้าคุณกำลังมองหาวิธีทำงานให้น้อยลง แต่ได้ผลลัพธ์มากขึ้น — คุณมาถูกที่แล้ว.<br/><br/>
+			ผมทำ content เกี่ยวกับ AI และ Workflow Automation เพื่อช่วยให้คุณมีเวลาและเงินมากขึ้น<br/>
+			ไม่ใช่แค่ทฤษฎี แต่เป็นระบบที่ใช้ได้จริงในบริบทธุรกิจไทยครับ.<br/><br/>
 		</p>
-		<SocialList />
+		<div class="mt-8">
+			<blockquote class="tiktok-embed" cite="https://www.tiktok.com/@krit.tech" data-unique-id="krit.tech" data-embed-type="creator" style="max-width: 780px; min-width: 288px;" > <section> <a target="_blank" href="https://www.tiktok.com/@krit.tech?refer=creator_embed">@krit.tech</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
+		</div>
 	</section>
 	{
 		pinnedPosts.length > 0 && (
