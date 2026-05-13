@@ -30,7 +30,35 @@ export default defineConfig({
 		icon(),
 		sitemap(),
 		mdx(),
-		robotsTxt(),
+		robotsTxt({
+			policy: [
+				{
+					userAgent: "GPTBot",
+					allow: "/",
+				},
+				{
+					userAgent: "Claude-Web",
+					allow: "/",
+				},
+				{
+					userAgent: "PerplexityBot",
+					allow: "/",
+				},
+				{
+					userAgent: "Google-Extended",
+					allow: "/",
+				},
+				{
+					userAgent: "ChatGPT-User",
+					allow: "/",
+				},
+				{
+					userAgent: "*",
+					allow: "/",
+					disallow: ["/og-image/"],
+				},
+			],
+		}),
 		webmanifest({
 			// See: https://github.com/alextim/astro-lib/blob/main/packages/astro-webmanifest/README.md
 			name: siteConfig.title,

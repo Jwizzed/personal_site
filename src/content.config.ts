@@ -35,6 +35,8 @@ const post = defineCollection({
 				.optional()
 				.transform((str) => (str ? new Date(str) : undefined)),
 			pinned: z.boolean().default(false),
+			// GEO: Estimated word count for Article schema
+			wordCount: z.number().optional(),
 		}),
 });
 

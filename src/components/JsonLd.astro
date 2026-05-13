@@ -1,0 +1,25 @@
+---
+import { generatePersonSchema, generateArticleSchema, generateWebPageSchema } from "@/lib/jsonld";
+import type { Graph } from "schema-dts";
+
+interface Props {
+	type?: "person" | "article" | "webpage";
+	data?: Record<string, unknown>;
+}
+
+const { type = "person", data = {} } = Astro.props;
+
+let schema: Graph;
+
+if (type === "article") {
+	schema = generateArticleSchema(data as Parameters<typeof generateArticleSchema>[0]);
+} else if (type === "webpage") {
+	schema = generateWebPageSchema(data as Parameters<typeof generateWebPageSchema>[0]);
+} else {
+	schema = generatePersonSchema(data as Parameters<typeof generatePersonSchema>[0]);
+}
+
+const schemaString = JSON.stringify(schema);
+---
+
+<script type="application/ld+json" set:html={schemaString} />

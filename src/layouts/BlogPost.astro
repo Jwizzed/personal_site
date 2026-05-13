@@ -4,19 +4,26 @@ import { type CollectionEntry, render } from "astro:content";
 import Masthead from "@/components/blog/Masthead.astro";
 import TOC from "@/components/blog/TOC.astro";
 import WebMentions from "@/components/blog/webmentions/index.astro";
+import JsonLd from "@/components/JsonLd.astro";
 
 import BaseLayout from "./Base.astro";
+import { calculateWordCount } from "@/lib/wordCount";
 
 interface Props {
 	post: CollectionEntry<"post">;
 }
 
 const { post } = Astro.props;
-const { ogImage, title, description, updatedDate, publishDate } = post.data;
+const { ogImage, title, description, updatedDate, publishDate, tags, wordCount: frontmatterWordCount } = post.data;
 const socialImage = ogImage ?? `/og-image/${post.id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
 const { headings, remarkPluginFrontmatter } = await render(post);
 const readingTime: string = remarkPluginFrontmatter.readingTime;
+
+// Calculate word count for JSON-LD schema
+const rawBody = remarkPluginFrontmatter.__rawBody || "";
+const calculatedWordCount = frontmatterWordCount || calculateWordCount(rawBody);
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 ---
 
 <BaseLayout
@@ -27,6 +34,19 @@ const readingTime: string = remarkPluginFrontmatter.readingTime;
 		title,
 	}}
 >
+	<JsonLd
+		type="article"
+		data={{
+			title,
+			description,
+			url: canonicalURL.toString(),
+			publishDate: publishDate.toISOString(),
+			updatedDate: updatedDate?.toISOString(),
+			wordCount: calculatedWordCount,
+			tags: tags || [],
+			coverImage: socialImage,
+		}}
+	/>
 	<article class="grow break-words" data-pagefind-body>
 		<div id="blog-hero" class="mb-12"><Masthead content={post} readingTime={readingTime} /></div>
 		<div class="flex flex-col gap-10 lg:flex-row lg:items-start lg:justify-between">

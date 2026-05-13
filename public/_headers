@@ -1,0 +1,17 @@
+# Cloudflare Pages Headers
+# Stale-While-Revalidate for AI crawlers and fast user experience
+
+/*
+  Cache-Control: public, max-age=0, stale-while-revalidate=86400
+
+/og-image/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/rss.xml
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/sitemap-index.xml
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/llms.txt
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
